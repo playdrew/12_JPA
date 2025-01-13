@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ohgiraffers.associationmapping.section03.bidirection.BiTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-01-09T06:13:49" hostname="DESKTOP-OSFKUPN" time="0.717">
+  <properties/>
+  <testcase name="양방향 연관관계 매핑 조회(주인이 아닌 엔티티로 조회) 카테고리코드로 조회" classname="com.ohgiraffers.associationmapping.section03.bidirection.BiTest" time="0.717"/>
+  <system-out><![CDATA[15:13:44.684 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ohgiraffers.associationmapping.section03.bidirection.BiTest]: BiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:13:44.841 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ohgiraffers.associationmapping.Chap03AssociationMappingApplication for test class com.ohgiraffers.associationmapping.section03.bidirection.BiTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.1)
+
+2025-01-09T15:13:45.415+09:00  INFO 1064 --- [    Test worker] c.o.a.section03.bidirection.BiTest       : Starting BiTest using Java 17.0.13 with PID 1064 (started by hi in C:\Lecture\12_jpa\01_lecture-source\chap03-association-mapping)
+2025-01-09T15:13:45.417+09:00  INFO 1064 --- [    Test worker] c.o.a.section03.bidirection.BiTest       : No active profile set, falling back to 1 default profile: "default"
+2025-01-09T15:13:45.927+09:00  INFO 1064 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-09T15:13:45.963+09:00  INFO 1064 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
+2025-01-09T15:13:46.421+09:00  INFO 1064 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-09T15:13:46.499+09:00  INFO 1064 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-09T15:13:46.549+09:00  INFO 1064 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-09T15:13:46.937+09:00  INFO 1064 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-09T15:13:46.983+09:00  INFO 1064 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-01-09T15:13:47.354+09:00  INFO 1064 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2299d903
+2025-01-09T15:13:47.356+09:00  INFO 1064 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-01-09T15:13:47.424+09:00  WARN 1064 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-01-09T15:13:47.450+09:00  INFO 1064 --- [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.33
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-09T15:13:48.788+09:00  INFO 1064 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-09T15:13:48.792+09:00  INFO 1064 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-09T15:13:49.055+09:00  INFO 1064 --- [    Test worker] c.o.a.section03.bidirection.BiTest       : Started BiTest in 4.022 seconds (process running for 5.499)
+Hibernate: 
+    select
+        c1_0.category_code,
+        c1_0.category_name,
+        c1_0.ref_category_code 
+    from
+        tbl_category c1_0 
+    where
+        c1_0.category_code=?
+Hibernate: 
+    select
+        ml1_0.category_code,
+        ml1_0.menu_code,
+        ml1_0.menu_name,
+        ml1_0.menu_price,
+        ml1_0.orderable_status 
+    from
+        tbl_menu ml1_0 
+    where
+        ml1_0.category_code=?
+[Menu(menuCode=2, menuName=우럭스무디, menuPrice=5000, category=com.ohgiraffers.associationmapping.section03.bedirection.Category@22942eff, orderableStatus=Y), Menu(menuCode=3, menuName=생갈치쉐이크, menuPrice=6000, category=com.ohgiraffers.associationmapping.section03.bedirection.Category@22942eff, orderableStatus=Y), Menu(menuCode=4, menuName=갈릭미역파르페, menuPrice=7000, category=com.ohgiraffers.associationmapping.section03.bedirection.Category@22942eff, orderableStatus=Y), Menu(menuCode=11, menuName=정어리빙수, menuPrice=10000, category=com.ohgiraffers.associationmapping.section03.bedirection.Category@22942eff, orderableStatus=Y), Menu(menuCode=12, menuName=날치알스크류바, menuPrice=2000, category=com.ohgiraffers.associationmapping.section03.bedirection.Category@22942eff, orderableStatus=Y), Menu(menuCode=17, menuName=아이스가리비관자육수, menuPrice=6000, category=com.ohgiraffers.associationmapping.section03.bedirection.Category@22942eff, orderableStatus=Y)]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

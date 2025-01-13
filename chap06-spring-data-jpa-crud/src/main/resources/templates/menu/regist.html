@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>regist</title>
+</head>
+<body>
+  <h1>신규 메뉴 등록하기</h1>
+  <form action="/menu/regist" method="post">
+
+    <!-- name 은 dto 와 일치-->
+    <label>메뉴 이름 :</label>
+    <input type="text" name="menuName"><br>
+    <label>메뉴 가격 :</label>
+    <input type="number" name="menuPrice"><br>
+
+    <label>카테고리</label>
+    <select name="categoryCode" id="categoryCode"></select><br>
+    <label>판매 여부</label>
+    <select name="orderableStatus">
+      <option value="Y">가능</option>
+      <option value="N">불가능</option>
+    </select><br>
+    <input type="submit" value="등록하기">
+  </form>
+
+  <script>
+    // category 정보 담기
+    fetch('/menu/category') // /menu/category 를 핸들러할 핸들러 메소드 작성 // 아직은 js 객체가 아닌 형태만 js
+            .then(res => res.json()) // then(그러면) 형태만 js 인 녀석을 진짜 js 객체로 변환
+            .then(data =>{ // data 는 배열방식으로 카테고리 코드 이름 ref 가 객체로서 들어있다. 그래서 for in 반복문을 사용하게 되면 하나하나씩 객체를 가져오는데.
+              console.log("data??",data) // 헷갈리는게 있으면 sysout 이랑 console 찍는 버릇들기
+              const $categoryCode = document.getElementById("categoryCode"); // 돔 요소를 취득
+              // 데이터는 list 형태이기 때문에 반복문
+              for(let index in data){
+                // 반복하는 option 태그 만들기
+                const $option = document.createElement("option"); // 요소를 취득하는 것이 아니라 생성
+                $option.value = data[index].categoryCode; // 데이터가 가진 인덱스를 접근함 그가 가진 카테고리 코드를 가짐
+                $option.textContent = data[index].categoryName;
+                $categoryCode.appendChild($option);
+              }
+
+
+            }) // js 객체로 변환
+  </script>
+</body>
+</html>
