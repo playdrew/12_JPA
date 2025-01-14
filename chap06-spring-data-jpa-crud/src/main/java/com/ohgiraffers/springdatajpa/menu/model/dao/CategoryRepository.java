@@ -14,5 +14,6 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
     // 네이티브 쿼리문법 FROM 절이 엔티티명이 아니라 테이블명이라서
     // nativeQuery = true 가
     @Query(value = "SELECT * FROM TBL_CATEGORY ORDER BY CATEGORY_CODE",nativeQuery = true)
+    // 홀수면 안되고 나누었을때 소수면 안되고 등등 조건절이 복잡해지면 네이티브 쿼리를 사용하면 좋다
     List<Category> findAllCategory();
 }

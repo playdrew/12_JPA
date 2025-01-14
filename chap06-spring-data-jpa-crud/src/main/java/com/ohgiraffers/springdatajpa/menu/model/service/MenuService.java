@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,7 +90,69 @@ public class MenuService {
         List<Category> categoryList = categoryRepository.findAllCategory();
 
         return categoryList.stream().map(
-                category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
+                    category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
+    }
+
+    // DML 구문이기 때문에 Transactional 필요
+    @Transactional
+    public void registNewMenu(MenuDTO newMenu) {
+
+        // save 는 데이터베이스에 엔티티 전달할테니 저장해줘라는 메소드
+        // newMenu 가 아니라 엔터티를 넘겨주어야함
+        // 지금까진 엔터티를 dto 로 변환 이젠 dto 를 엔터티로 변환
+        // dml 구문에서는 dto 타입을 Entity 로 변환을 해야
+        // PersistenceContext == jpa 가 관리를 해준다.
+        repository.save(modelMapper.map(newMenu,Menu.class));
+        // 동시에 넣는 경우 주인과 주인과 아닌 경우를 잘 구분해서 넣기
+        // fk 를 가지고 있는게 주인 mappedBy 는 속성은 연관관계의 주인이 아닌 쪽(외래키가 없는)에
+        //   사용된다.
+    }
+
+    @Transactional
+    public void modifyMenu(MenuDTO modifyMenu) {
+        // save 인설트 find 셀렉트 delete 삭제
+        // update 는 없다.
+
+        /* update 는 엔티티를 특정해서 필드의 값을 변경해주면 된다. */
+        /* JPA 는 변경감지 기능이 있다.
+        *  따라서 하나의 엔티티를 특정해서 필드 값을 변경하면
+        *  변경된 값으로 flush(반영)을 해준다.*/
+
+        // 메뉴(Menu) 엔티티 특정하기
+        // 엔티티 찾기 (특정)
+        // optional 은 예외처리를 해야함
+
+        Menu foundMenu = repository.findById(modifyMenu.getMenuCode()).orElseThrow(IllegalArgumentException::new);
+
+        System.out.println("찾은 Entity 값 foundMenu = " + foundMenu);
+
+        /* 1. setter 를 통해 update 기능 - 지양한다. */
+        // foundMenu.setMenuName(modifyMenu.getMenuName());
+
+        System.out.println("setter 사용후 foundMenu : " + foundMenu);
+
+        /* 2. @Builder 를 통해 update 기능 */
+        // 새로운 값이 추가하면 다시한번 인스턴스를 추가해준다 의존성추가하듯이
+//        foundMenu = foundMenu.toBuilder()
+//                    .menuName(modifyMenu.getMenuName()).build();
+
+        // build 를 통해서 foundMenu 새롭게 탄생 시켰으니
+        // save 메소드를 통해 JPA 전달
+//        repository.save(foundMenu);
+
+        /* 3. Entity 내부에 Builder 패턴을 구현 */
+        foundMenu = foundMenu.menuName(modifyMenu.getMenuName())
+                             .builder();
+        // save 라고 하지만 인설트 쿼리문 안돌아가고 변경감지한것만 퍼시스트한것이에요
+        repository.save(foundMenu);
+    }
+
+    @Transactional
+    public void deleteMenu(int menuCode) {
+        // menuCode 를 특정후(select 후 삭제)
+        repository.deleteById(menuCode);
     }
 }
 
+// 네이티브 쿼리를 사용할땐 조건절이 복잡할때 정확하게 특정 못할때가 있음..
+// join 이 많으면 마이바티스 사용하는게 좋아요.

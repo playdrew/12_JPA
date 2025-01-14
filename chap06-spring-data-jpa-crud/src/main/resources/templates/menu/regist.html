@@ -8,7 +8,8 @@
   <h1>신규 메뉴 등록하기</h1>
   <form action="/menu/regist" method="post">
 
-    <!-- name 은 dto 와 일치-->
+    <!-- name 은 dto 와 일치
+        리퀘스트파람도 사용가능함. 근데 가독성 떨어짐-->
     <label>메뉴 이름 :</label>
     <input type="text" name="menuName"><br>
     <label>메뉴 가격 :</label>
@@ -37,7 +38,7 @@
                 const $option = document.createElement("option"); // 요소를 취득하는 것이 아니라 생성
                 $option.value = data[index].categoryCode; // 데이터가 가진 인덱스를 접근함 그가 가진 카테고리 코드를 가짐
                 $option.textContent = data[index].categoryName;
-                $categoryCode.appendChild($option);
+                $categoryCode.appendChild($option); // 맵이나 필터 배열 등이 중요하다.
               }
 
 

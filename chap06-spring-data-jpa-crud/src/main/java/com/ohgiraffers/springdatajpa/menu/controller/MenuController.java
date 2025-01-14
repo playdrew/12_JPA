@@ -24,6 +24,7 @@ import java.util.List;
 public class MenuController {
 
     private final MenuService menuSerivce;
+    private final MenuService menuService;
 
     // 경로를 타고 넘어오는 변수로서 저장
     @GetMapping("/{menuCode}")
@@ -85,4 +86,44 @@ public class MenuController {
         // return 구문이 view 를 지정하는 것이 아닌 , Data 를 return 하고 있다.
         return menuSerivce.findAllCategory();
     }
+
+    @PostMapping("/regist")
+    public String registMenu(@ModelAttribute MenuDTO newMenu){
+
+        System.out.println("view 에서 전달받은 newMenu = " + newMenu);
+
+        menuSerivce.registNewMenu(newMenu);
+
+        return "redirect:/menu/list";
+    }
+
+    @GetMapping("/modify")
+    public void modifyPage(){}
+
+    @PostMapping("/modify")
+    public String modifyMenu(@ModelAttribute MenuDTO modifyMenu){
+
+        System.out.println("수정할 메뉴 정보 객체 modifyMenu = " + modifyMenu);
+
+        menuService.modifyMenu(modifyMenu);
+
+        // url : /menu/3 이라고 합니다. 그럼 @GetMapping("/{menuCode}") 이부분으로 넘어가는 거에요
+        return "redirect:/menu/" + modifyMenu.getMenuCode();
+    }
+
+    @GetMapping("/delete")
+    public void deletePage(){}
+
+    // 패스베이어블은 url을 넘겨온 데이터
+    // 화면에서 요청한 파라미터
+    // 구지 모델어트리뷰트 쓸 필요 없음 값이 하나기 때문
+    @PostMapping("/delete")
+    public String delete(@RequestParam int menuCode){
+
+        menuSerivce.deleteMenu(menuCode);
+
+        return "redirect:/menu/list";
+    }
+
+
 }
