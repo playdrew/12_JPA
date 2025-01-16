@@ -31,6 +31,7 @@ public class Menu {
     private int categoryCode;
 
     @Column(name = "orderable_status")
+    // @JoinColumn(name = "category_code",referencedColumnName = "category_code")
     private String orderableStatus;
 
 //    public void setMenuName(String menuName){

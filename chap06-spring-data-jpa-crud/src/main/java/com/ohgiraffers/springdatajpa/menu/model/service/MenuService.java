@@ -89,6 +89,8 @@ public class MenuService {
         // 카테고리 엔티티에서 조회
         List<Category> categoryList = categoryRepository.findAllCategory();
 
+        // 카테고리 리스트를 쫙 펼친다음에 category 라는 지역변수에 매핑을 해주는데 그게 dto 형태이다.
+        // 그리고 펼친 것을 다시 뭉태기로 묶어서 List 화 시켜준다.
         return categoryList.stream().map(
                     category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
     }
