@@ -154,6 +154,21 @@ public class MenuService {
         // menuCode 를 특정후(select 후 삭제)
         repository.deleteById(menuCode);
     }
+
+    public List<MenuDTO> categoryNameList() {
+        List<Menu> categoryMenuList = repository.findAll();
+
+        return categoryMenuList.stream()
+                .map(menu -> {
+                    MenuDTO menuDTO = modelMapper.map(menu, MenuDTO.class);
+                    if (menu.getCategoryCode() != null) {
+                        CategoryDTO categoryDTO = modelMapper.map(menu.getCategoryCode(), CategoryDTO.class);
+                        menuDTO.setCategoryDTO(categoryDTO);
+                    }
+                    return menuDTO;
+                })
+                .collect(Collectors.toList());
+    }
 }
 
 // 네이티브 쿼리를 사용할땐 조건절이 복잡할때 정확하게 특정 못할때가 있음..

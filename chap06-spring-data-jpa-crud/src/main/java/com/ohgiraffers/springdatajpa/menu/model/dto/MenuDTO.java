@@ -15,6 +15,8 @@ public class MenuDTO {
     private int menuCode;
     private String menuName;
     private int menuPrice;
-    private int categoryCode;
+//    private int categoryCode;
+    private CategoryDTO categoryDTO;
     private String orderableStatus;
+
 }

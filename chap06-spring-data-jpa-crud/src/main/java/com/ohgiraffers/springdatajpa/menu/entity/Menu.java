@@ -27,8 +27,12 @@ public class Menu {
     @Column(name = "menu_price")
     private int menuPrice;
 
-    @Column(name = "category_code")
-    private int categoryCode;
+//    @Column(name = "category_code")
+//    private int categoryCode;
+
+    @ManyToOne
+    @JoinColumn(name = "category_code", referencedColumnName = "category_code")
+    private Category categoryCode;
 
     @Column(name = "orderable_status")
     // @JoinColumn(name = "category_code",referencedColumnName = "category_code")

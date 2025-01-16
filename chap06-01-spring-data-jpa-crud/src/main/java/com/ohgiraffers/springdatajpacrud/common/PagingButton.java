@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class PagingButton {
 
-    private int currentPage; // 현재 페이지
-    private int startPage; // 시작 페이지
-    private int endPage; // 마지막 페이지
+    private int currentPage;
+    private int startPage;
+    private int endPage;
 }

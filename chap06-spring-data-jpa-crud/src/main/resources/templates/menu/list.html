@@ -19,7 +19,7 @@
         <td th:text="${result.menuCode}"></td>
         <td th:text="${result.menuName}"></td>
         <td th:text="${result.menuPrice}"></td>
-        <td th:text="${result.categoryCode}"></td>
+        <td th:text="${result.categoryDTO != null ? result.categoryDTO.categoryCode : 'N/A'}"></td>
         <td th:text="${result.orderableStatus}"></td>
     </tr>
 </table>

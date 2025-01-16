@@ -125,5 +125,14 @@ public class MenuController {
         return "redirect:/menu/list";
     }
 
+    @GetMapping("/categoryname")
+    public String categoryNameList(Model model) {
+
+        List<MenuDTO> categoryMenuList = menuSerivce.categoryNameList();
+
+        model.addAttribute("categoryMenuList", categoryMenuList);
+
+        return "menu/categoryname";
+    }
 
 }
