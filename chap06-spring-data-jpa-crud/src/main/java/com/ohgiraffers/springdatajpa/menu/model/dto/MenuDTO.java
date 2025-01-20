@@ -18,5 +18,6 @@ public class MenuDTO {
     private int categoryCode;
     private CategoryDTO categoryDTO;
     private String orderableStatus;
+    private String categoryName;
 
 }

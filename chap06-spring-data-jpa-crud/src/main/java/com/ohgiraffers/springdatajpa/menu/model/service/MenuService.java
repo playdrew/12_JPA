@@ -155,15 +155,16 @@ public class MenuService {
         repository.deleteById(menuCode);
     }
 
-    public List<MenuDTO> categoryNameList() {
-        List<Menu> categoryMenuList = repository.findAll();
+    public List<MenuDTO> categoryListName() {
+        List<Menu> menuList = repository.findAll();
 
-        return categoryMenuList.stream()
+        return menuList.stream()
                 .map(menu -> {
+                    // MenuDTO 객체 생성
                     MenuDTO menuDTO = modelMapper.map(menu, MenuDTO.class);
-                    if (menu.getCategoryCode() != null) {
-                        CategoryDTO categoryDTO = modelMapper.map(menu.getCategoryCode(), CategoryDTO.class);
-                        menuDTO.setCategoryDTO(categoryDTO);
+                    // categoryName을 menuDTO에 설정
+                    if (menu.getCategory() != null) {
+                        menuDTO.setCategoryName(menu.getCategory().getCategoryName());
                     }
                     return menuDTO;
                 })

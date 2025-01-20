@@ -3,19 +3,15 @@ package com.ohgiraffers.springdatajpa.menu.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_menu")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
-//@Setter // 지양
-@ToString
-// setter 제외하고 셋팅
-// @Builder(toBuilder = true) // update 를 위한
-// 빌더가 실제로 어떻게 동작하는지 직접 사용
+//@Builder(toBuilder = true)  // Builder 기능 사용
 public class Menu {
 
-    // 테이블과 일치하는 필드 작성
     @Id
     @Column(name = "menu_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,29 +23,50 @@ public class Menu {
     @Column(name = "menu_price")
     private int menuPrice;
 
-//    @Column(name = "category_code")
-//    private int categoryCode;
-
-    @ManyToOne
-    @JoinColumn(name = "category_code", referencedColumnName = "category_code")
-    private Category categoryCode;
+    @Column(name = "category_code")
+    private int categoryCode;
 
     @Column(name = "orderable_status")
-    // @JoinColumn(name = "category_code",referencedColumnName = "category_code")
     private String orderableStatus;
 
-//    public void setMenuName(String menuName){
+//    1. setter 사용 update (지양한다.)
+//    public void setMenuName(String menuName) {
+//        // setter 함수로 전달 받은 menuName 필드에 대입
 //        this.menuName = menuName;
+//
 //    }
 
+    @ManyToOne
+    @JoinColumn(name = "category_code", referencedColumnName = "category_code", insertable = false, updatable = false)
+    private Category category;
+
+    public Menu(int menuCode, String menuName, int menuPrice, int categoryCode, String orderableStatus) {
+        this.menuCode = menuCode;
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+        this.categoryCode = categoryCode;
+        this.orderableStatus = orderableStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuCode=" + menuCode +
+                ", menuName='" + menuName + '\'' +
+                ", menuPrice=" + menuPrice +
+                ", categoryCode=" + categoryCode +
+                ", orderableStatus='" + orderableStatus + '\'' +
+                '}';
+    }
+
     /* 3. builder 패턴 직접 구현 */
-    public Menu menuName(String var){
+    public Menu menuName(String var) {
         this.menuName = var;
         return this;
     }
 
-    public Menu builder(){
-        return new Menu(menuCode,menuName,menuPrice,categoryCode,orderableStatus);
+    public Menu builder() {
+        return new Menu(menuCode, menuName, menuPrice, categoryCode, orderableStatus);
     }
 
 }

@@ -126,12 +126,11 @@ public class MenuController {
     }
 
     @GetMapping("/categoryname")
-    public String categoryNameList(Model model) {
+    public String categoryNamePage(Model model) {
 
-        List<MenuDTO> categoryMenuList = menuSerivce.categoryNameList();
+        List<MenuDTO> menuList = menuService.categoryListName();
 
-        model.addAttribute("categoryMenuList", categoryMenuList);
-
+        model.addAttribute("menuList", menuList);
         return "menu/categoryname";
     }
 

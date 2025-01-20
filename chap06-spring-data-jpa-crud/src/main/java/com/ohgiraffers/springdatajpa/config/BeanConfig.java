@@ -13,33 +13,16 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.ohgiraffers.springdatajpa")
 public class BeanConfig {
 
-//    @Bean
-//    public ModelMapper modelMapper(){
-//
-//        ModelMapper modelMapper = new ModelMapper();
-//        modelMapper.getConfiguration()
-//                   .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
-//                   .setFieldMatchingEnabled(true);
-//
-//        return modelMapper;
-//
-//    }
-
     @Bean
-    public ModelMapper modelMapper() {
+    public ModelMapper modelMapper(){
+
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()
-                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
-                .setFieldMatchingEnabled(true);
-
-        // Custom mapping 설정
-        modelMapper.addMappings(new PropertyMap<Menu, MenuDTO>() {
-            @Override
-            protected void configure() {
-                map().setCategoryCode(source.getCategoryCode().getCategoryCode()); // 명시적으로 매핑
-            }
-        });
+                   .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+                   .setFieldMatchingEnabled(true);
 
         return modelMapper;
+
     }
+
 }
